@@ -73,6 +73,12 @@ public:
     void addRoom(Room* room);
     void connectRooms(const std::string& room1_name, const std::string& direction,
                      const std::string& room2_name);
+
+    //extra creidt extension
+    //shop system
+    void openShop();
+    void shopBuyMenu();
+    void shopSellMenu();
 };
 
 #endif // GAME_H

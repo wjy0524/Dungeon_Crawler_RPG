@@ -32,7 +32,7 @@ public:
     
     // Destructor
     // TODO: Implement in Item.cpp
-    ~Item();
+    virtual ~Item();
     
     // Getters (inline)
     std::string getName() const { return name; }
@@ -122,5 +122,42 @@ public:
     int getHealingAmount() const { return healing_amount; }
     bool isUsed() const { return used; }
 };
+
+//key
+class Key : public Item {
+public:
+    Key(const std::string& name, const std::string& description);
+    void displayInfo() const;
+};
+
+//scroll
+class Scroll : public Item {
+private:
+    int damage_amount;
+    bool used;
+
+public:
+    Scroll(const std::string& name, const std::string& desc, int dmg);
+
+    void displayInfo() const override;
+    void use() override;
+
+    int getDamageAmount() const { return damage_amount; }
+    bool isUsed() const { return used; }
+};
+
+//Gold item
+class GoldItem : public Item {
+private:
+    int worth; // how much it would be if it is traded in the store
+
+public:
+    GoldItem(const std::string& name, const std::string& desc, int value);
+
+    void displayInfo() const override;
+    void use() override; 
+    int getWorth() const { return worth; }
+};
+
 
 #endif // ITEM_H

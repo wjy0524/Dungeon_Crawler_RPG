@@ -65,7 +65,7 @@ public:
     Monster* getMonster() { return monster; }
     bool hasMonster() const { return monster != NULL && monster->isAlive(); }
     
-    // TODO: Implement in Room.cpp
+    // TODO: Imp lement in Room.cpp
     void clearMonster();
     
     // Item management

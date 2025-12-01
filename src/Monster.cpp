@@ -1,5 +1,6 @@
 #include "Monster.h"
 #include <iostream>
+using namespace std;
 
 // ============================================================================
 // Base Monster class
@@ -25,6 +26,11 @@ Monster::Monster(const std::string& name, int hp, int attack, int defense,
 // - Clear the vector after deleting items
 //
 Monster::~Monster() {
+    //loop through loot_table and delete each loot_table[i] Item*
+    for(int i = 0; i < loot_table.size(); i++){
+        delete loot_table[i];
+    }
+    loot_table.clear();
 }
 
 
@@ -36,6 +42,7 @@ Monster::~Monster() {
 //
 void Monster::displayStats() const {
     // TODO: Display monster stats
+    cout << getName() << " [HP: " << getCurrentHP() << "/" << getMaxHP() << "]\n";
 }
 
 
@@ -46,6 +53,13 @@ void Monster::displayStats() const {
 //
 void Monster::addLoot(Item* item) {
     // TODO: Add item to loot table
+    //check if item pointer is NULL 
+    //if so just return
+    if(item == NULL){
+        return;
+    }
+    //add item to loot_table vector using push_back()
+    loot_table.push_back(item);
 }
 
 
@@ -58,8 +72,11 @@ void Monster::addLoot(Item* item) {
 //
 std::vector<Item*> Monster::dropLoot() {
     // TODO: Return loot and transfer ownership
-    std::vector<Item*> empty;
-    return empty;  // REPLACE THIS
+    //create a copy of the loot_table vector
+    std::vector<Item*> copy = loot_table;
+    //clear the original loot_table
+    loot_table.clear();
+    return copy;  // return the copy
 }
 
 
@@ -71,7 +88,7 @@ std::vector<Item*> Monster::dropLoot() {
 //
 std::string Monster::getAttackMessage() const {
     // TODO: Return attack message
-    return "";  // REPLACE THIS
+    return getName() + " attacks!";
 }
 
 
@@ -94,6 +111,7 @@ std::string Monster::getAttackMessage() const {
 Goblin::Goblin() 
     : Monster("Goblin", 30, 5, 2, 10, 5) {
     // TODO: Add loot items
+    addLoot(new Consumable("Small Potion", "Restores 10 HP", 10));
 }
 
 
@@ -104,7 +122,7 @@ Goblin::Goblin()
 //
 std::string Goblin::getAttackMessage() const {
     // TODO: Return goblin attack message
-    return "";  // REPLACE THIS
+    return "The goblin slashes toward you with its corroded blade!";
 }
 
 
@@ -126,6 +144,7 @@ std::string Goblin::getAttackMessage() const {
 Skeleton::Skeleton()
     : Monster("Skeleton", 40, 8, 4, 20, 10) {
     // TODO: Add loot items
+    addLoot(new Weapon("Old Sword", "A worn-out blade", 3));
 }
 
 
@@ -136,7 +155,7 @@ Skeleton::Skeleton()
 //
 std::string Skeleton::getAttackMessage() const {
     // TODO: Return skeleton attack message
-    return "";  // REPLACE THIS
+    return "The skeleton charges, bones clacking as it swings its rusted sword!";
 }
 
 
@@ -161,6 +180,9 @@ std::string Skeleton::getAttackMessage() const {
 Dragon::Dragon()
     : Monster("Dragon", 150, 20, 10, 100, 50) {
     // TODO: Add legendary loot items
+    addLoot(new Weapon("Dragon Slayer sword", "Legendary sword forged to slay dragons", 10));
+    addLoot(new Armor("Dragon Scale Armor", "Armor made from dragon scales", 8));
+    addLoot(new Consumable("Greater Health Potion", "Restores 100 HP", 100));
 }
 
 
@@ -171,7 +193,7 @@ Dragon::Dragon()
 //
 std::string Dragon::getAttackMessage() const {
     // TODO: Return dragon attack message
-    return "";  // REPLACE THIS
+    return "The dragon breathes fire at you!";
 }
 
 
@@ -184,5 +206,51 @@ std::string Dragon::getAttackMessage() const {
 //
 int Dragon::calculateDamage() const {
     // TODO: Calculate damage with fire bonus
-    return 0;  // REPLACE THIS
+    //calculate the base damage
+    int basedamage = Monster::calculateDamage();
+    return basedamage + 5;  // total damage: base + 5
 }
+
+
+//for extra credit, more monsters
+//Troll
+Troll::Troll()
+    : Monster("Troll", 120, 6, 5, 40, 15){
+    addLoot(new Consumable("Medium Potion", "Restores 40 HP", 40));
+    addLoot(new Weapon("Heavy Club", "A big crude club", 4));
+}
+
+std::string Troll::getAttackMessage() const {
+    return "The troll smashes you with its heavy club!";
+}
+
+//Ghost
+//it has the avoidance ability
+//hit or miss (50%)
+Ghost::Ghost()
+    : Monster("Ghost", 25, 12, 2, 30, 10)
+{
+    addLoot(new Consumable("Spirit Dust", "Mystical dust", 20));
+}
+
+std::string Ghost::getAttackMessage() const {
+    return "The ghost unleashes a chilling wail!";
+}
+
+//wizard
+Wizard::Wizard()
+    : Monster("Wizard", 50, 15, 3, 50, 20)
+{
+    addLoot(new Weapon("Magic Wand", "A wand infused with arcane power", 6));
+    addLoot(new Scroll("Scroll of Fireball", "Unleashes a burst of flame", 80));
+}
+
+std::string Wizard::getAttackMessage() const {
+    return "The wizard casts a blazing fireball!";
+}
+
+int Wizard::calculateDamage() const {
+    int base = Monster::calculateDamage();
+    return base + 3; // magic bonus
+}
+

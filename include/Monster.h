@@ -99,4 +99,25 @@ public:
     int calculateDamage() const;
 };
 
+//extra credits
+class Troll : public Monster {
+public:
+    Troll();
+    std::string getAttackMessage() const;
+};
+
+class Ghost : public Monster {
+public:
+    Ghost();
+    std::string getAttackMessage() const override;
+};
+
+class Wizard : public Monster {
+public:
+    Wizard();
+    std::string getAttackMessage() const override;
+    int calculateDamage() const override; // optional magic bonus
+};
+
+
 #endif // MONSTER_H
