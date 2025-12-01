@@ -74,6 +74,9 @@ Character (base)
 └── Monster (adds rewards, loot)
     ├── Goblin
     ├── Skeleton
+    ├── Troll
+    ├── Ghost
+    ├── Wizard
     └── Dragon (boss)
 ```
 
@@ -82,7 +85,11 @@ Character (base)
 Item (base)
 ├── Weapon (increases attack)
 ├── Armor (increases defense)
+├── Scroll (one time attack item)
+├── key (I didn't have enough time to actually locked system so key is just there)
+├── Gold Item (only can be sold at shop for gold)
 └── Consumable (healing items)
+
 ```
 
 ### Other Classes

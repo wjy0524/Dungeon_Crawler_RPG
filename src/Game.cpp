@@ -99,7 +99,7 @@ void Game::initializeWorld() {
     connectRooms("Hallway", "north", "Throne Room");
     connectRooms("Hallway", "south", "Library");
     connectRooms("Library", "south", "Catacombs");
-    connectRooms("Hallway", "west", "Barracks");
+    connectRooms("Library", "west", "Barracks");
     connectRooms("Treasury", "east", "Vault");
     
     // TODO: Add monsters
@@ -589,6 +589,7 @@ void Game::combat(Monster* monster) {
                     }
 
                     current_room->clearMonster();
+                    break;
                 }
 
                 continue; // skip monster's turn
@@ -766,7 +767,7 @@ void Game::shopBuyMenu(){
     cout << "1. Health Potion (Restores 20 HP) - 10 Gold\n";
     cout << "2. Iron Sword (+5 Damage) - 25 Gold\n";
     cout << "3. Leather Armor (+3 Armor) - 20 Gold\n";
-    cout << "4. Magic Scroll (30 gold)\n";
+    cout << "4. Magic Scroll (40 gold)\n";
     cout << "5. Exit\n";
 
     while(true){
@@ -798,12 +799,12 @@ void Game::shopBuyMenu(){
             player->addItem(new Armor("Leather Armor", "Basic protection", 3));
             cout << "Purchased Leather Armor!\n";
         }else if(choice == "4"){
-            if(player->getGold() < 30){ 
+            if(player->getGold() < 40){ 
                 cout << "Not enough gold!\n"; 
                 continue; 
             }
-            player->spendGold(30);
-            player->addItem(new Scroll("Magic Scroll", "Deals strong magic damage", 150));
+            player->spendGold(40);
+            player->addItem(new Scroll("Magic Scroll", "Deals strong magic damage", 100));
             cout << "Purchased Magic Scroll!\n";
         }else if(choice == "5"){
             cout << "Returning to shop...\n";
