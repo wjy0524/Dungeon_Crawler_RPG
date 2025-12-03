@@ -28,17 +28,20 @@ private:
     std::vector<Item*> inventory;  // Player owns these items!
     Item* equipped_weapon;         // Points to item in inventory (not separately owned)
     Item* equipped_armor;          // Points to item in inventory (not separately owned)
+    std::string character_type;    // warrior, Mage, Archer, Rogue
     
 public:
     // Constructor
     // TODO: Implement in Player.cpp
     // HINT: Must call Character base constructor
-    Player(const std::string& name);
+    // I added character_type parameter
+    Player(const std::string& name, const std::string& type);
     
     // Destructor - CRITICAL for memory management!
     // TODO: Implement in Player.cpp
     // HINT: Must delete all items in inventory
-    ~Player();
+    // to fix an warning, I declared it as virtual
+    virtual ~Player();
     
     // Override displayStats from Character
     // TODO: Implement in Player.cpp

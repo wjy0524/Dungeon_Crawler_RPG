@@ -2,13 +2,14 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <limits>
 
 using namespace std;
 
 //lower case function
 static string toLower(const string& s){
     string lower = s;
-    for (int i = 0; i < lower.length(); i++) {
+    for (size_t i = 0; i < lower.length(); i++) {
         if (lower[i] >= 'A' && lower[i] <= 'Z') {
             lower[i] = lower[i] + ('a' - 'A');
         }
@@ -52,20 +53,33 @@ Game::~Game() {
 // SUGGESTED WORLD LAYOUT:
 //                [Throne Room]
 //                     |
-//     [Armory] - [Hallway] - [Treasury]
+//     [Armory] - [Hallway] - [Treasury] - [vault]
 //                     |
-//                 [Entrance]
+//    [Barracks] - [Library]
+//                     |
+//                [Catacombs]
+
+//                 [Entrance] to [hallway] (it's like a teleportation)
 //
 // MONSTERS:
 // - Hallway: Goblin
 // - Armory: Skeleton
-// - Treasury: Skeleton
+// - Treasury: Ghost
 // - Throne Room: Dragon (boss!)
+// - Library: Ghost
+// - Barracks: Troll
+// - Catacombs: Skeleton
+// - Vault: Wizard
 //
 // ITEMS:
 // - Entrance: Small Potion
 // - Armory: Iron Sword, Chain Mail
 // - Treasury: Health Potion
+// - Library: Fire Scroll
+// - Catacombs: Silver Key
+// - Treasury: Golden Key
+// - Vault: Gold Pile, Jeweled Cup
+// - Barracks: Steel Axe
 //
 void Game::initializeWorld() {
     // TODO: Create rooms
@@ -231,7 +245,24 @@ void Game::run() {
     //if name is empty, name automatically consiered as Hero
     if (name.empty()) name = "Hero";
 
-    player = new Player(name);
+    
+
+
+    // character selection
+    cout << "Choose your character:\n";
+    cout << "1. Warrior\n";
+    cout << "2. Mage\n";
+    cout << "3. Archer\n";
+    cout << "4. Rogue\n";
+    cout << "> ";
+    string choice;
+    getline(cin, choice);
+    string type = "Warrior"; // default type
+    if (choice == "2") type = "Mage";
+    else if (choice == "3") type = "Archer";
+    else if (choice == "4") type = "Rogue";
+
+    player = new Player(name, type);
 
     initializeWorld();
     createStartingInventory();
@@ -767,7 +798,7 @@ void Game::shopBuyMenu(){
     cout << "1. Health Potion (Restores 20 HP) - 10 Gold\n";
     cout << "2. Iron Sword (+5 Damage) - 25 Gold\n";
     cout << "3. Leather Armor (+3 Armor) - 20 Gold\n";
-    cout << "4. Magic Scroll (40 gold)\n";
+    cout << "4. Magic Scroll (+100 Damage) - 40 Gold\n";
     cout << "5. Exit\n";
 
     while(true){

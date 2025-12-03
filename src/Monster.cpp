@@ -27,7 +27,7 @@ Monster::Monster(const std::string& name, int hp, int attack, int defense,
 //
 Monster::~Monster() {
     //loop through loot_table and delete each loot_table[i] Item*
-    for(int i = 0; i < loot_table.size(); i++){
+    for(size_t i = 0; i < loot_table.size(); i++){
         delete loot_table[i];
     }
     loot_table.clear();

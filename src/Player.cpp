@@ -4,9 +4,10 @@
 using namespace std;
 
 //lower case function
+// this is a helper func to convert a string to lowercase for case insensitive comparison
 string toLower(const string& s){
     string lower = s;
-    for (int i = 0; i < lower.length(); i++) {
+    for (size_t i = 0; i < lower.length(); i++) {
         if (lower[i] >= 'A' && lower[i] <= 'Z') {
             lower[i] = lower[i] + ('a' - 'A');
         }
@@ -18,10 +19,10 @@ string toLower(const string& s){
 // HINTS:
 // - MUST call Character base constructor. 
 //
-Player::Player(const std::string& name)
+Player::Player(const std::string& name, const std::string& type)
     : Character(name, 100, 10, 5),
       level(1), experience(0), gold(0),
-      equipped_weapon(NULL), equipped_armor(NULL) {
+      equipped_weapon(NULL), equipped_armor(NULL), character_type(type) {
 }
 
 
@@ -33,7 +34,7 @@ Player::Player(const std::string& name)
 //
 Player::~Player() {
     // TODO: Delete all inventory items
-    for(int i=0; i<inventory.size(); i++){
+    for(unsigned int i=0; i<inventory.size(); i++){
         delete inventory[i];
     }
     inventory.clear();
@@ -61,16 +62,16 @@ void Player::displayStats() const {
     cout << "HP: " << getCurrentHP() << "/" << getMaxHP() << "\n";
     
     //attack(with weapon bonus)
-    int weapon_bonus = 0;
+    int weapon_bonus = equipped_weapon ? equipped_weapon->getValue() : 0;
     if(equipped_weapon != NULL){
-        cout << "Attack: " << getAttack() << " (+" << equipped_weapon->getValue() << " from " << equipped_weapon->getName() << ")\n";
+        cout << "Attack: " << getAttack() << " (+" << weapon_bonus << " from " << equipped_weapon->getName() << ")\n";
     }else{
         cout << "Attack: " << getAttack() << "\n";
     }
-
+    int armor_bonus = equipped_armor ? equipped_armor->getValue() : 0;
     //defense (with armor bonuns)
     if(equipped_armor != NULL){
-        cout << "Defense: " << getDefense() << " (+" << equipped_armor->getValue() << " from " << equipped_armor->getName() << ")\n";
+        cout << "Defense: " << getDefense() << " (+" << armor_bonus << " from " << equipped_armor->getName() << ")\n";
     }else{
         cout << "Defense: " << getDefense() << "\n";
     }
@@ -82,8 +83,30 @@ void Player::displayStats() const {
     cout << "Equipped Weapon: " << (equipped_weapon ? equipped_weapon->getName() : "None") << "\n";
     cout << "Equipped Armor : " << (equipped_armor ? equipped_armor->getName() : "None") << "\n";
 
-    cout << "==================================\n\n";
-    
+    //decorative formatting ascii art for character
+    //ascii art based on character type is created by AI (CHATGPT)
+    //was helped to make particular character ascii art with the help of AI (CHATGPT)
+    if(character_type == "Warrior"){
+        cout << "\n";
+        cout << "  (•̀ᴗ•́)و ̑̑  \n";
+        cout << "   /|======> \n";
+        cout << "   / \\ \n";
+    }else if(character_type == "Mage"){
+        cout << "\n";
+        cout << "   (∩｀-´)⊃━☆ﾟ.*･｡ﾟ \n";
+        cout << "    /|   \n";
+        cout << "    / \\ \n";
+    }else if(character_type == "Archer"){
+        cout << "\n";
+        cout << "   (•̀ω•́ )σ  ) ) ) →→→ \n";
+        cout << "    /|  \n";
+        cout << "    / \\ \n";
+    }else if(character_type == "Rogue"){
+        cout << "\n";
+        cout << "   (⌐■_■)っ─■  \n";
+        cout << "    /|  \n";
+        cout << "    / \\ \n";
+    } 
 }
 // TODO: Override calculateDamage to include weapon bonus
 // HINTS:
@@ -139,7 +162,7 @@ void Player::removeItem(const std::string& item_name) {
     //change the item name into lowercase (case-insensitive comparsion)
     string target = toLower(item_name);
     //search inventory for item by name
-    for(int i = 0; i < inventory.size(); i++){
+    for(unsigned int i = 0; i < inventory.size(); i++){
         string current = toLower(inventory[i]->getName());
         //if found: delete the item, then erase from vector
         if(current == target){
@@ -172,7 +195,7 @@ void Player::displayInventory() const {
         cout << "Empty" << "\n";
     }else{
         //loop through and print each item's name and type
-        for(int i = 0; i < inventory.size(); i++){
+        for(unsigned int i = 0; i < inventory.size(); i++){
             Item* item = inventory[i];
             cout << " - " << item->getName() << " (" << item->getType() << ")" << "\n";
         }
@@ -192,7 +215,7 @@ bool Player::hasItem(const std::string& item_name) const {
     // TODO: Check if item exists in inventory
     string target = toLower(item_name);
     //loop through inventory to figure out if the item is in inventory
-    for(int i = 0; i < inventory.size(); i++){
+    for(unsigned int i = 0; i < inventory.size(); i++){
         string current = toLower(inventory[i]->getName());
         //if so, return true
         if (current == target) {
@@ -214,7 +237,7 @@ Item* Player::getItem(const std::string& item_name) {
     // TODO: Find and return item pointer
     string target = toLower(item_name);
     //loop through inventory to figure out if item is in inventory
-    for(int i=0; i<inventory.size(); i++){
+    for(unsigned int i=0; i<inventory.size(); i++){
         string current = toLower(inventory[i]->getName());
         //if found
         if(current == target){

@@ -76,6 +76,7 @@ public:
 
     //extra creidt extension
     //shop system
+    // 
     void openShop();
     void shopBuyMenu();
     void shopSellMenu();

@@ -139,8 +139,8 @@ private:
 public:
     Scroll(const std::string& name, const std::string& desc, int dmg);
 
-    void displayInfo() const override;
-    void use() override;
+    void displayInfo() const;
+    void use();
 
     int getDamageAmount() const { return damage_amount; }
     bool isUsed() const { return used; }
@@ -154,8 +154,8 @@ private:
 public:
     GoldItem(const std::string& name, const std::string& desc, int value);
 
-    void displayInfo() const override;
-    void use() override; 
+    void displayInfo() const;
+    void use(); 
     int getWorth() const { return worth; }
 };
 

@@ -33,7 +33,8 @@ public:
     // Destructor - CRITICAL for memory management!
     // TODO: Implement in Monster.cpp
     // HINT: Must delete all items in loot_table
-    ~Monster();
+    //to fix an warninig, I declared it as virtual
+    virtual ~Monster();
     
     // Override displayStats from Character
     // TODO: Implement in Monster.cpp
@@ -109,14 +110,14 @@ public:
 class Ghost : public Monster {
 public:
     Ghost();
-    std::string getAttackMessage() const override;
+    std::string getAttackMessage() const;
 };
 
 class Wizard : public Monster {
 public:
     Wizard();
-    std::string getAttackMessage() const override;
-    int calculateDamage() const override; // optional magic bonus
+    std::string getAttackMessage() const;
+    int calculateDamage() const; // optional magic bonus
 };
 
 

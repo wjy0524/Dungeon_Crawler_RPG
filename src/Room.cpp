@@ -6,7 +6,7 @@ using namespace std;
 //lower case function
 static string toLower(const string& s){
     string lower = s;
-    for (int i = 0; i < lower.length(); i++) {
+    for (unsigned int i = 0; i < lower.length(); i++) {
         if (lower[i] >= 'A' && lower[i] <= 'Z') {
             lower[i] = lower[i] + ('a' - 'A');
         }
@@ -26,7 +26,7 @@ Room::~Room() {
     //clean up monster
     clearMonster();
     //clean up the items
-    for(int i = 0; i < items.size(); i++){
+    for(size_t i = 0; i < items.size(); i++){
         delete items[i];
     }
     items.clear();
@@ -175,7 +175,7 @@ void Room::removeItem(const std::string& item_name) {
     //have to search items vector for item by name 
     //case insensitive so I have to use lowerfunciton
     string target = toLower(item_name);
-    for(int i = 0; i < items.size(); i++){
+    for(size_t i = 0; i < items.size(); i++){
         string curritem = toLower(items[i]->getName());
 
         if (curritem == target) {
@@ -196,7 +196,7 @@ void Room::removeItem(const std::string& item_name) {
 void Room::displayItems() const {
     // TODO: Display all items in room
     // iterate through item vectors to print out all items in a list
-    for(int i = 0; i < items.size(); i++){
+    for(size_t i = 0; i < items.size(); i++){
         cout << "  - " << items[i]->getName() << "\n";
     }
 
@@ -215,7 +215,7 @@ Item* Room::getItem(const std::string& item_name) {
     //search items vector for item by name using lowerfunction
     string target = toLower(item_name);
     // Search through items vector
-    for(int i = 0; i < items.size(); i++){
+    for(size_t i = 0; i < items.size(); i++){
         string curritem = toLower(items[i]->getName());
 
         if (curritem == target) {
