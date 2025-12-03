@@ -17,7 +17,7 @@ static string toLower(const string& s){
 
 // TODO: Implement Room constructor
 Room::Room(const std::string& name, const std::string& description)
-    : name(name), description(description), visited(false), monster(NULL) {
+    : name(name), description(description), visited(false), monster(NULL), locked(false), requiredKey("") {
 }
 
 

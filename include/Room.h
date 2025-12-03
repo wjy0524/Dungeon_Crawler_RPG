@@ -25,6 +25,7 @@ private:
     std::string name;
     std::string description;
     bool visited;
+
     
     // Room contents
     Monster* monster;          // NULL if no monster - Room owns this!
@@ -35,6 +36,10 @@ private:
     // Value: pointer to connected Room
     // NOTE: Room does NOT own these - Game owns all rooms!
     std::map<std::string, Room*> exits;
+
+    //this is for locked rooms (extra credit extension)
+    bool locked;
+    std::string requiredKey;
     
 public:
     // Constructor
@@ -75,6 +80,20 @@ public:
     void displayItems() const;
     Item* getItem(const std::string& item_name);
     bool hasItems() const { return !items.empty(); }
+
+    //locked room functions (extra credit extension)
+    // lock and unlock functions
+    // lock function    
+    void lockRoom(const std::string& keyName){
+        locked = true;
+        requiredKey = keyName;
+    }
+    // unlock function
+    void unlockRoom(){ locked = false; }
+    // getter for locked status
+    bool isLocked() const { return locked; }
+    // getter for required key name
+    std::string getRequiredKey() const { return requiredKey; }
     
     // Getters/Setters
     std::string getName() const { return name; }

@@ -23,6 +23,32 @@ Player::Player(const std::string& name, const std::string& type)
     : Character(name, 100, 10, 5),
       level(1), experience(0), gold(0),
       equipped_weapon(NULL), equipped_armor(NULL), character_type(type) {
+        //set different stats based on character type
+        // high HP and Defense for Warrior
+        if(type == "Warrior"){
+            setMaxHP(140);
+            setCurrentHP(140);
+            setAttack(12);
+            setDefense(8);
+            // high Magic Attack but low HP for Mage
+        }else if(type == "Mage"){
+            setMaxHP(90);
+            setCurrentHP(90);
+            setAttack(18);
+            setDefense(3);
+            // balanced stats for Archer
+        }else if(type == "Archer"){
+            setMaxHP(110);
+            setCurrentHP(110);
+            setAttack(15);
+            setDefense(5);
+            // high Attack but low Defense for Rogue
+        }else if(type == "Rogue"){
+            setMaxHP(95);
+            setCurrentHP(95);
+            setAttack(16);
+            setDefense(2);
+        }
 }
 
 
@@ -83,6 +109,8 @@ void Player::displayStats() const {
     cout << "Equipped Weapon: " << (equipped_weapon ? equipped_weapon->getName() : "None") << "\n";
     cout << "Equipped Armor : " << (equipped_armor ? equipped_armor->getName() : "None") << "\n";
 
+    cout << "Class: " << character_type << "\n";
+
     //decorative formatting ascii art for character
     //ascii art based on character type is created by AI (CHATGPT)
     //was helped to make particular character ascii art with the help of AI (CHATGPT)
@@ -107,6 +135,7 @@ void Player::displayStats() const {
         cout << "    /|  \n";
         cout << "    / \\ \n";
     } 
+    cout << "==================================\n\n";
 }
 // TODO: Override calculateDamage to include weapon bonus
 // HINTS:

@@ -23,7 +23,6 @@ Character::Character(const std::string& name, int hp, int attack, int defense)
 // - Example: std::cout << "Character " << name << " destroyed" << std::endl;
 //
 Character::~Character() {
-    cout << "Character \"" << name << "\" destroyed." << endl;
 }
 
 
@@ -63,7 +62,7 @@ void Character::takeDamage(int damage) {
     }
     
     // TODO: Print damage message with remaining HP
-    cout << name << " takes " << actual_damage << " damage! ()" << current_hp << "/" << max_hp << " HP" << endl;
+    cout << name << " takes " << actual_damage << " damage! (" << current_hp << "/" << max_hp << " HP)" << endl;
 
 }
 

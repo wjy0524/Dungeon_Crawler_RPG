@@ -139,6 +139,11 @@ void Game::initializeWorld() {
     world["Vault"]->addItem(new GoldItem("Gold Pile", "A large stack of ancient coins.", 50));
     world["Vault"]->addItem(new GoldItem("Jeweled Cup", "A valuable artifact.", 30));
     world["Barracks"]->addItem(new Weapon("Steel Axe", "A heavy axe used by ancient soldiers.", 7));
+    //you need silver key to unlock the vault
+    //you need golden key to unlock the throne room
+    world["Vault"]->lockRoom("Silver Key");
+    world["Throne Room"]->lockRoom("Golden Key");
+
     
     // TODO: Set starting room
     current_room = entrance;
@@ -412,17 +417,24 @@ void Game::move(const std::string& direction) {
 
     //get exit in specified direction
     Room* nxt = current_room->getExit(direction);
-    if(nxt != NULL){
-        // upadte the current_room
-        current_room = nxt;
-        // Show new room info
-        look();
-        // change visit flag is true
-        current_room->markVisited();
-
-    }else{
+    if(nxt == NULL){
         cout << "You can't go that way.\n";
+        return;
     }
+    // check if the room is locked
+    if(nxt->isLocked()){
+        string key = nxt->getRequiredKey();
+        if(!player->hasItem(key)){
+            cout << "The " << nxt->getName() << " is locked. You need the " << key << " to enter.\n";
+            return;
+        }
+        cout << "You use the " << key << " to unlock the door!\n";
+        nxt->unlockRoom();
+    }
+    //update current_room
+    current_room = nxt;
+    look();
+    current_room->markVisited();
 }
 
 
@@ -766,7 +778,12 @@ void Game::help() {
 //openshop functions where players can buy and sell items
 void Game::openShop(){
     cout << "\n========== SHOP ==========\n";
-    cout << "Welcome to the Dungeon Shop!\n";
+    //ascii art for the shopkeeper generated with the help of AI <chat gpt>
+    cout << "        ╭━★\n";
+    cout << "     ( ͡° ͜ʖ ͡°)     Welcome to the Dungeon Shop!\n";
+    cout << "      /|💰        I've got wares if you've got coin.\n";
+    cout << "      / \\\n"; 
+    cout << "\n";
     cout << "You currently have " << player->getGold() << " gold.\n";
     cout << "You can buy and sell items here.\n";
     cout << "Type 'buy' to purchase, 'sell' to sell items, or 'exit' to leave.\n";

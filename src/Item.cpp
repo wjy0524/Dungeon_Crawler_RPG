@@ -23,7 +23,6 @@ Item::Item(const std::string& name, const std::string& description,
 // - Can add debug output if helpful
 //
 Item::~Item() {
-    cout << "Item destroyed: " << name << endl;
 }
 
 
