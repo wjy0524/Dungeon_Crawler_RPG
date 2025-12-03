@@ -212,10 +212,12 @@ int Dragon::calculateDamage() const {
 }
 
 
-//for extra credit, more monsters
+
+// additonal monsters for extra credit extensions
+// those extra monsters are implemented in the game appearing
 //Troll
 Troll::Troll()
-    : Monster("Troll", 120, 6, 5, 40, 15){
+    : Monster("Troll", 120, 6, 5, 40, 15){ // the property of troll is that it has high hp
     addLoot(new Consumable("Medium Potion", "Restores 40 HP", 40));
     addLoot(new Weapon("Heavy Club", "A big crude club", 4));
 }
@@ -226,7 +228,7 @@ std::string Troll::getAttackMessage() const {
 
 //Ghost
 //it has the avoidance ability
-//hit or miss (50%)
+//hit or miss (50%) when the player attacks the ghost
 Ghost::Ghost()
     : Monster("Ghost", 25, 12, 2, 30, 10)
 {
@@ -242,7 +244,7 @@ Wizard::Wizard()
     : Monster("Wizard", 50, 15, 3, 50, 20)
 {
     addLoot(new Weapon("Magic Wand", "A wand infused with arcane power", 6));
-    addLoot(new Scroll("Scroll of Fireball", "Unleashes a burst of flame", 80));
+    addLoot(new Scroll("Scroll of Fireball", "Unleashes a burst of flame", 80)); // scroll item can be used one time attacking 80 damages
 }
 
 std::string Wizard::getAttackMessage() const {
@@ -251,6 +253,6 @@ std::string Wizard::getAttackMessage() const {
 
 int Wizard::calculateDamage() const {
     int base = Monster::calculateDamage();
-    return base + 3; // magic bonus
+    return base + 4; // magic bonus adding from base damage
 }
 

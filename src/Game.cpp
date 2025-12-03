@@ -7,6 +7,7 @@
 using namespace std;
 
 //lower case function
+// this is a helper func to convert a string to lowercase for case insensitive comparison
 static string toLower(const string& s){
     string lower = s;
     for (size_t i = 0; i < lower.length(); i++) {
@@ -245,9 +246,8 @@ void Game::run() {
     //if name is empty, name automatically consiered as Hero
     if (name.empty()) name = "Hero";
 
-    
-
-
+    //user is able to choose the characters
+    //but the stats of the characters are the same for simplicity, but just different names and different ascii arts
     // character selection
     cout << "Choose your character:\n";
     cout << "1. Warrior\n";
@@ -258,9 +258,9 @@ void Game::run() {
     string choice;
     getline(cin, choice);
     string type = "Warrior"; // default type
-    if (choice == "2") type = "Mage";
-    else if (choice == "3") type = "Archer";
-    else if (choice == "4") type = "Rogue";
+    if(choice == "2") type = "Mage";
+    else if(choice == "3") type = "Archer";
+    else if(choice == "4") type = "Rogue";
 
     player = new Player(name, type);
 
@@ -374,14 +374,14 @@ void Game::processCommand(const std::string& command) {
         }
     }else if(verb == "stats"){
         player->displayStats();
-    }else if(verb == "shop"){
+    }else if(verb == "shop"){ // added shop command for extra credit extension
         openShop();
     }else if(verb == "help" || verb == "h" || verb == "?"){
         help();
     }else if(verb == "quit" || verb == "exit"){
         game_over = true;
     }else{
-        cout << "That command doesn't seem to mean anything.\n";
+        cout << "Wrong command. Please type the correct command!\n";
     }
 }
 
@@ -404,6 +404,7 @@ void Game::move(const std::string& direction) {
     if(current_room == NULL) return;
 
     //check if monster blocks path
+    //you can only move to the other room if you defeated the monster in the current room
     if(current_room->hasMonster()){
         cout << "A monster blocks your way. Defeat it before you can proceed.\n";
         return;
@@ -523,7 +524,7 @@ void Game::combat(Monster* monster) {
             //Ghost avoidance ability
             //use dynamic_cast to check if the monster is a Ghost
             //if casting succeeds, it returns a valid Ghost pointer, otherwise returns NULL
-            //I leanred the usage of dynamic_cast from AI <chat gpt>
+            //I learned the usage of dynamic_cast from AI <chat gpt>
             if (dynamic_cast<Ghost*>(monster) != NULL) {
                 if (rand() % 2 == 0) {
                     cout << "\nYour attack passes through the ghost — it avoids your attack!\n";
@@ -565,6 +566,7 @@ void Game::combat(Monster* monster) {
             }
         // Item
         //checking if the command starts with "use" from index 0
+        //studied the use of rfind and find_first_not_of from AI <chat gpt>
         }else if(cmd.rfind("use", 0) == 0){
             string item_name = cmd.substr(3); //extract item name after use
             // same with above, I have to remove all the spaces to prevent the error
@@ -750,7 +752,7 @@ void Game::help() {
     cout << "  attack           - Attack the current monster\n";
     cout << "  pickup <item>    - Pick up an item on the ground\n";
     cout << "  inventory        - Show your inventory\n";
-    cout << "  use <item>       - Use a consumable item\n";
+    cout << "  use <item>       - Use a consumable/scroll item\n";
     cout << "  equip <item>     - Equip a weapon/armor\n";
     cout << "  shop             - Open the dungeon shop to buy/sell items\n";
     cout << "  stats            - Show your character stats\n";

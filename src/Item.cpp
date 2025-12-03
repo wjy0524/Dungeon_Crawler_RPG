@@ -175,10 +175,11 @@ void Consumable::use() {
     //set used flag to be true 
     used = true;
 }
-// ============================================================================
+// these items are added for extra credit extensions
 // key class implementation
-// ============================================================================
 
+//key is made but I didn't have enough time to build lock and unlocked mechanism to the game
+// so key is just an item that can be displayed, but doens't do any functionality in the game
 Key::Key(const std::string& name, const std::string& description)
     : Item(name, description, "Key", 0) {}
 
@@ -196,14 +197,14 @@ Scroll::Scroll(const string& name, const string& desc, int dmg)
     : Item(name, desc, "Scroll", dmg),
       damage_amount(dmg), used(false) {}
 
-void Scroll::displayInfo() const {
+void Scroll::displayInfo() const{
     cout << "[SCROLL] " << getName() << "\n"
          << "  " << getDescription() << "\n"
          << "  Deals: " << damage_amount << " damage\n";
 }
 
 void Scroll::use() {
-    if (used) {
+    if(used){
         cout << getName() << " has already been used!\n";
         return;
     }
@@ -213,9 +214,10 @@ void Scroll::use() {
     used = true;
 }
 
-// ============================================================================
+
 // GoldItem class implementation
-// ============================================================================
+// GoldItem is an item tha can be sold in the shop for gold coins
+// It cannot be used directly
 
 GoldItem::GoldItem(const std::string& name, const std::string& desc, int value)
     : Item(name, desc, "Gold", value), worth(value) {
@@ -228,5 +230,6 @@ void GoldItem::displayInfo() const {
 }
 
 void GoldItem::use() {
-    cout << "Gold cannot be used directly! It can only be traded or sold.\n";
+    cout << "Gold cannot be used directly! It can only be sold.\n";
+    // can't use gold directly
 }

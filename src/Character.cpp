@@ -35,7 +35,7 @@ Character::~Character() {
 int Character::calculateDamage() const {
     // TODO: Calculate and return damage
     // Base damage is attack stat plus small random bonus
-    return attack + (rand() % 5);    // REPLACE THIS
+    return attack + (rand() % 5);    
 }
 
 
@@ -52,14 +52,14 @@ void Character::takeDamage(int damage) {
     // TODO: Calculate actual damage after defense
     int actual_damage = damage - defense;
     if(actual_damage < 0){
-        actual_damage = 0;
+        actual_damage = 0; // minimum damage is 0
     }
     // TODO: Apply damage to current_hp
     current_hp -= actual_damage;
     // TODO: Check if character died (hp <= 0)
     if(current_hp<=0){
         current_hp = 0;
-        alive = false;
+        alive = false; // set alive flag to false
     }
     
     // TODO: Print damage message with remaining HP

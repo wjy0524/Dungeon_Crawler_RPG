@@ -4,6 +4,7 @@
 using namespace std;
 
 //lower case function
+// this is a helper func to convert a string to lowercase for case insensitive comparison
 static string toLower(const string& s){
     string lower = s;
     for (unsigned int i = 0; i < lower.length(); i++) {
