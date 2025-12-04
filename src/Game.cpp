@@ -773,7 +773,7 @@ void Game::help() {
     cout << "===============================\n";
 }
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //extra credit extension
 //openshop functions where players can buy and sell items
 void Game::openShop(){
