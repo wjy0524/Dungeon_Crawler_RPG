@@ -1,6 +1,6 @@
-# 🐉 Dungeon Adventure RPG
+# Dungeon Adventure RPG
 
-## 🔧 Overview
+## Overview
 
 This is a **text-based RPG game built in C++**, showcasing object-oriented programming concepts such as  
 inheritance, polymorphism, dynamic memory management, and class hierarchy design.
@@ -10,7 +10,7 @@ the **Dragon** in the Throne Room.
 
 ---
 
-## ⭐ Key Features
+## Key Features
 
 - Object-Oriented Design (Inheritance & Polymorphism)
 - Turn-based combat
@@ -23,7 +23,7 @@ the **Dragon** in the Throne Room.
 
 ---
 
-## 🧱 Class Structure
+## Class Structure
 
 ### Core Hierarchy
 
@@ -56,7 +56,7 @@ the **Dragon** in the Throne Room.
 
 ---
 
-## 🧠 Design Decisions
+## Design Decisions
 
 ### Inheritance & Polymorphism
 The project uses an OOP structure where `Player` and all monster types inherit from `Character`.  
@@ -73,7 +73,7 @@ Valgrind was used extensively to ensure **zero memory leaks**.
 
 ---
 
-## 🧪 Testing & Debugging
+## Testing & Debugging
 
 ### Testing Strategy
 Beyond running `make test`, manual gameplay testing was performed to verify movement, combat,  
@@ -100,7 +100,7 @@ was being used. Valgrind also helped identify missing deletes and ownership issu
 
 ---
 
-## 📝 Reflection
+## Reflection
 
 The most valuable lesson from this lab was understanding **ownership and memory management** in C++  
 while designing maintainable object-oriented systems. Structuring the project with clean class boundaries  
@@ -108,7 +108,7 @@ made debugging and extending the game significantly easier.
 
 ---
 
-## 📦 Build & Run
+## Build & Run
 
 ```bash
 make clean
