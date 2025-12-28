@@ -111,8 +111,9 @@ made debugging and extending the game significantly easier.
 ## 📦 Build & Run
 
 ```bash
+make clean
 make
-./game
+run
 ```
 
 ## How to Play
