@@ -1,229 +1,129 @@
-🏰 Dungeon Adventure RPG – README
-📌 Overview
+# 🐉 Dungeon Adventure RPG
 
-This project is a text-based RPG built in C++ using object-oriented programming techniques.
-The player explores interconnected rooms, battles monsters, manages inventory, collects items, and aims to defeat the Dragon in the Throne Room.
+## 🔧 Overview
 
-Key features include:
+This is a **text-based RPG game built in C++**, showcasing object-oriented programming concepts such as  
+inheritance, polymorphism, dynamic memory management, and class hierarchy design.
 
-Inheritance & Polymorphism
+The player navigates rooms, battles monsters, collects items, manages equipment, and attempts to defeat  
+the **Dragon** in the Throne Room.
 
-Turn-based combat
+---
 
-Inventory & equipment system
+## ⭐ Key Features
 
-Character class selection
+- Object-Oriented Design (Inheritance & Polymorphism)
+- Turn-based combat
+- Inventory & equipment system
+- Character class selection
+- Room navigation system
+- Shop system (buy & sell)
+- Dynamic memory management
+- ASCII-art character display
 
-Room navigation system
+---
 
-Shop system (buy & sell)
+## 🧱 Class Structure
 
-Dynamic memory management
+### Core Hierarchy
 
-ASCII art flavor
-
-🧱 Class Structure
-Core Hierarchy
                 Character
                 /      \
             Player     Monster
                          / |  |  \
            Goblin Skeleton Ghost Dragon ...
 
-Game World Components
-Game → manages world, rooms, interactions
-Room → contains Monster*, vector<Item*>, map<string, Room*>
 
-Item (base)
- ├─ Weapon
- ├─ Armor
- ├─ Consumable
- ├─ Scroll
- ├─ Key
- └─ GoldItem
+### Game World Components
 
-🧙‍♂️ Character Classes
+- **Game** → manages world, rooms, interactions  
+- **Room** → contains `Monster*`, `vector<Item*>`, `map<string, Room*>`  
+- **Items** → base `Item` class with derived types:
+  - `Weapon`
+  - `Armor`
+  - `Consumable`
+  - `Scroll`
+  - `Key`
+  - `GoldItem`
 
-Player can select from four classes (stats differ slightly):
+- **Monsters** → base `Monster` class with overrides:
+  - Goblin
+  - Troll
+  - Skeleton
+  - Ghost (special dodge ability)
+  - Wizard
+  - Dragon (boss)
 
-Class	HP	Attack	Defense	Notes
-Warrior	High HP	High DEF	Tanky frontline	
-Mage	Low HP	High magic dmg	Fragile	
-Archer	Balanced	Mid dmg	Long-range style	
-Rogue	High dmg	Low DEF	Fast striker	
+---
 
-Each class prints unique ASCII character art when showing stats.
+## 🧠 Design Decisions
 
-⚔️ Combat System
+### Inheritance & Polymorphism
+The project uses an OOP structure where `Player` and all monster types inherit from `Character`.  
+Polymorphism allows monsters to override behaviors such as `calculateDamage()` or special abilities  
+(e.g., **Ghost dodge mechanic**).  
+This design is far more extensible than a procedural C version and enables a clean separation of logic.
 
-Turn-based battle loop
+### Memory Management
+All dynamically allocated objects (`Item`, `Monster`, `Room`, `Player`) are owned explicitly:  
+- `Game` deletes the `Player` and all `Room` objects.  
+- Each `Room` destructor deletes its `Monster` and all items it owns.  
+- `Player` destructor deletes all inventory items.  
+Valgrind was used extensively to ensure **zero memory leaks**.
 
-Player actions:
+---
 
-attack
+## 🧪 Testing & Debugging
 
-use <item>
+### Testing Strategy
+Beyond running `make test`, manual gameplay testing was performed to verify movement, combat,  
+inventory operations, shop behavior, and item usage. Edge cases such as invalid input, fleeing combat,  
+or picking up nonexistent items were also tested.
 
-flee
+### Hardest Bug Found
+The most difficult bug involved input handling, where using `getline()` after `cin` caused input buffering  
+issues. This was solved by removing the unnecessary `cin.ignore()` after understanding that only `getline()`  
+was being used. Valgrind also helped identify missing deletes and ownership issues.
 
-Ghosts have 50% dodge mechanic
+---
 
-Scrolls deal magic damage
+## ⚔️ Implementation Challenges
 
-Monsters drop loot + exp + gold
+1. **Hardest TODO**  
+   Implementing the full combat system with Ghost dodge mechanics and scroll damage logic.
 
-Defeating the Dragon activates victory flag
+2. **Most Time-Consuming**  
+   The inventory system and item ownership transfer between rooms and players.
 
-🧭 World Layout
-                [Throne Room]
-                     |
-     [Armory] - [Hallway] - [Treasury] - [Vault]
-                     |
-    [Barracks] - [Library]
-                     |
-                [Catacombs]
+3. **Most Interesting**  
+   Designing monster subclasses and adding unique behaviors like Ghost phase-dodge and Dragon boss logic.
 
-                   [Entrance]
+---
 
+## 📝 Reflection
 
-Each room contains:
+The most valuable lesson from this lab was understanding **ownership and memory management** in C++  
+while designing maintainable object-oriented systems. Structuring the project with clean class boundaries  
+made debugging and extending the game significantly easier.
 
-Description
+---
 
-Optional monster
+## 📦 Build & Run
 
-Items on ground
-
-Exits to other rooms
-
-🗝 Items
-
-Item types and functionality:
-
-Item Type	Purpose
-Weapon	Increase attack damage
-Armor	Increase defense
-Consumable	Restore HP
-Scroll	Magic damage attack
-Key	Used to unlock future content
-GoldItem	Sellable items for gold
-
-Inventory supports:
-
-pickup
-
-use
-
-equip
-
-remove
-
-🛒 Shop System (Extension)
-
-The dungeon shop allows the player to:
-
-Buy
-
-Potions
-
-Swords
-
-Armor
-
-Magic Scrolls
-
-Sell
-
-Any item from inventory
-
-Prices based on item value
-
-ASCII merchant included for flavor.
-
-🔢 Memory Management
-
-Memory ownership is clearly assigned:
-
-Game deletes:
-
-player
-
-all rooms
-
-Room deletes:
-
-its monster
-
-all items on the ground
-
-Player deletes:
-
-items stored in their inventory
-
-All dynamic allocations verified with:
-
-valgrind --leak-check=full ./bin/rpg_game
-
-
-Zero leaks confirmed.
-
-🚀 Compilation & Execution
-Build
+```bash
 make
+./game
+```
 
-Run
-./bin/rpg_game
-
-Clean
-make clean
-
-Valgrind
-valgrind --leak-check=full ./bin/rpg_game
-
-🧪 Testing
-
-Testing included:
-
-Running through every room & command
-
-Fighting all monster types
-
-Inventory stress testing (equip/unequip/use/remove)
-
-Shop buy/sell loops
-
-Invalid command handling
-
-Edge cases (flee in combat, using scrolls, ghost dodge)
-
-Memory validation via Valgrind
-
-Major bugs fixed:
-
-Input buffering issue with getline
-
-Double-delete from Room → Player item transfer
-
-Combat flow breaking when scrolls were used
-
-Monster dodge logic issue
-
-📝 Extensions Implemented
-
-Character class selection (Warrior/Mage/Archer/Rogue)
-
-ASCII art for player characters and NPC merchant
-
-Full Shop system (buy + sell)
-
-Magic scroll attacks
-
-Ghost dodge mechanic
-
-Key items (Silver Key, Golden Key)
-
-Dragon final boss + victory flag
-
-💡 Reflection
-
-This lab taught me real-world OOP design with constructors, destructors, dynamic memory ownership, and how to structure a multi-file C++ project. Debugging with Valgrind was especially helpful for building safer memory habits.
+## How to Play
+go <direction>
+look
+attack
+pickup <item>
+inventory
+use <item>
+equip <item>
+stats
+shop
+help
+quit
